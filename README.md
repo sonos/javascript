@@ -170,28 +170,8 @@ Other Style Guides
     };
     ```
 
-  <a name="objects--reserved-words-2"></a><a name="3.3"></a>
-  - [3.3](#objects--reserved-words-2) Use readable synonyms in place of reserved words. jscs: [`disallowIdentifierNames`](http://jscs.info/rule/disallowIdentifierNames)
-
-    ```javascript
-    // bad
-    const superman = {
-      class: 'alien',
-    };
-
-    // bad
-    const superman = {
-      klass: 'alien',
-    };
-
-    // good
-    const superman = {
-      type: 'alien',
-    };
-    ```
-
   <a name="es6-computed-properties"></a><a name="3.4"></a>
-  - [3.4](#es6-computed-properties) Use computed property names when creating objects with dynamic property names.
+  - [3.3](#es6-computed-properties) Use computed property names when creating objects with dynamic property names.
 
     > Why? They allow you to define all the properties of an object in one place.
 
@@ -216,31 +196,8 @@ Other Style Guides
     };
     ```
 
-  <a name="es6-object-shorthand"></a><a name="3.5"></a>
-  - [3.5](#es6-object-shorthand) Use object method shorthand. eslint: [`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html) jscs: [`requireEnhancedObjectLiterals`](http://jscs.info/rule/requireEnhancedObjectLiterals)
-
-    ```javascript
-    // bad
-    const atom = {
-      value: 1,
-
-      addValue: function (value) {
-        return atom.value + value;
-      },
-    };
-
-    // good
-    const atom = {
-      value: 1,
-
-      addValue(value) {
-        return atom.value + value;
-      },
-    };
-    ```
-
   <a name="es6-object-concise"></a><a name="3.6"></a>
-  - [3.6](#es6-object-concise) Use property value shorthand. eslint: [`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html) jscs: [`requireEnhancedObjectLiterals`](http://jscs.info/rule/requireEnhancedObjectLiterals)
+  - [3.4](#es6-object-concise) Use property value shorthand. eslint: [`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html) jscs: [`requireEnhancedObjectLiterals`](http://jscs.info/rule/requireEnhancedObjectLiterals)
 
     > Why? It is shorter to write and descriptive.
 
@@ -259,7 +216,7 @@ Other Style Guides
     ```
 
   <a name="objects--grouped-shorthand"></a><a name="3.7"></a>
-  - [3.7](#objects--grouped-shorthand) Group your shorthand properties at the beginning of your object declaration.
+  - [3.5](#objects--grouped-shorthand) Group your shorthand properties at the beginning of your object declaration.
 
     > Why? It's easier to tell which properties are using the shorthand.
 
@@ -289,7 +246,7 @@ Other Style Guides
     ```
 
   <a name="objects-quoted-props"></a><a name="3.8"></a>
-  - [3.8](#objects-quoted-props) Only quote properties that are invalid identifiers. eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html) jscs: [`disallowQuotedKeysInObjects`](http://jscs.info/rule/disallowQuotedKeysInObjects)
+  - [3.6](#objects-quoted-props) Only quote properties that are invalid identifiers. eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html) jscs: [`disallowQuotedKeysInObjects`](http://jscs.info/rule/disallowQuotedKeysInObjects)
 
   > Why? In general we consider it subjectively easier to read. It improves syntax highlighting, and is also more easily optimized by many JS engines.
 
