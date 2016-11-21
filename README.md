@@ -1,4 +1,5 @@
-# Airbnb JavaScript Style Guide() {
+# Sonos JavaScript Style Guide() {
+## Based on [AirBnB's Guide](https://github.com/airbnb/javascript)
 
 *A mostly reasonable approach to JavaScript*
 
@@ -8,9 +9,6 @@
 
 Other Style Guides
  - [ES5](es5/)
- - [React](react/)
- - [CSS & Sass](https://github.com/airbnb/css)
- - [Ruby](https://github.com/airbnb/ruby)
 
 ## Table of Contents
 
