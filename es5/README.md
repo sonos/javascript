@@ -1,6 +1,5 @@
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-# Airbnb JavaScript Style Guide() {
+# Sonos JavaScript Style Guide() {
+## Based on [AirBnB's Guide](https://github.com/airbnb/javascript/es5)
 
 *A mostly reasonable approach to JavaScript*
 
@@ -118,6 +117,24 @@
     // good
     var superman = {
       type: 'alien'
+    };
+    ```
+
+  - Only quote properties that are invalid identifiers.
+
+    ```javascript
+    // bad
+    var bad = {
+      'foo': 3,
+      'bar': 4,
+      'data-blah': 5,
+    };
+
+    // good
+    var good = {
+      foo: 3,
+      bar: 4,
+      'data-blah': 5,
     };
     ```
 
@@ -258,6 +275,19 @@
     }
     ```
 
+  - Never use `eval()` on a string, it opens too many vulnerabilities.
+
+  - Do not unnecessarily escape characters in strings.
+
+    ```javascript
+    // bad
+    var foo = '\'this\' \i\s \"quoted\"';
+
+    // good
+    var foo = '\'this\' is "quoted"';
+    var foo = `'this' is "quoted"`;
+    ```
+
 **[⬆ back to top](#table-of-contents)**
 
 
@@ -276,6 +306,15 @@
       return true;
     };
 
+    // immediately-invoked function expression (IIFE)
+    (function () {
+      console.log('Welcome to the Internet. Please follow me.');
+    }());
+    ```
+
+  - Wrap immediately invoked function expressions in parentheses.
+
+    ```javascript
     // immediately-invoked function expression (IIFE)
     (function () {
       console.log('Welcome to the Internet. Please follow me.');
@@ -313,6 +352,64 @@
     // good
     function yup(name, options, args) {
       // ...stuff...
+    }
+    ```
+
+  - Never use the Function constructor to create a new function.
+
+    ```javascript
+    // bad
+    var add = new Function('a', 'b', 'return a + b');
+
+    // still bad
+    var subtract = Function('a', 'b', 'return a - b');
+    ```
+
+  - Spacing in a function signature.
+
+    ```javascript
+    // bad
+    var f = function(){};
+    var g = function (){};
+    var h = function() {};
+
+    // good
+    var x = function () {};
+    var y = function a() {};
+    ```
+
+  - Never mutate parameters.
+
+    ```javascript
+    // bad
+    function f1(obj) {
+      obj.key = 1;
+    };
+
+    // good
+    function f2(obj) {
+      var key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;
+    };
+    ```
+
+  - Never reassign parameters.
+
+    ```javascript
+    // bad
+    function f1(a) {
+      a = 1;
+    }
+
+    function f2(a) {
+      if (!a) { a = 1; }
+    }
+
+    // good
+    function f3(a) {
+      var b = a || 1;
+    }
+
+    function f4(a = 1) {
     }
     ```
 
@@ -582,9 +679,9 @@
     + **Strings** evaluate to **false** if an empty string `''`, otherwise **true**
 
     ```javascript
-    if ([0]) {
+    if ([0] && []) {
       // true
-      // An array is an object, objects evaluate to true
+      // An array (even an empty one) is an object, objects evaluate to true
     }
     ```
 
@@ -613,6 +710,69 @@
     ```
 
   - For more information see [Truth Equality and JavaScript](http://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/#more-2108) by Angus Croll.
+
+  - Use braces to create blocks in `case` and `default` clauses that contain lexical declarations (e.g. `function`).
+
+    ```javascript
+    // bad
+    switch (foo) {
+      case 1:
+        var x = 1;
+        break;
+      defalt:
+        function f() {}
+        break;
+    }
+
+    // good
+    switch (foo) {
+      case 1:
+        var x = 1;
+        break;
+      case 3: {
+        function f() {}
+        break;
+      }
+      default:
+        bar();
+        break;
+    }
+    ```
+
+  - Ternaries should not be nested and should generally be single line expressions.
+
+    ```javascript
+    // bad
+    var foo = maybe1 > maybe2
+      ? "bar"
+      : value1 > value2 ? "baz" : null;
+
+    // better
+    var maybeNull = value1 > value2 ? 'baz' : null;
+
+    var foo = maybe1 > maybe2
+      ? 'bar'
+      : maybeNull;
+
+    // best
+    var maybeNull = value1 > value2 ? 'baz' : null;
+
+    var foo = maybe1 > maybe2 ? 'bar' : maybeNull;
+    ```
+
+  - Avoid unneeded ternary statements.
+
+    ```javascript
+    // bad
+    var foo = a ? a : b;
+    var bar = c ? true : false;
+    var baz = c ? false : true;
+
+    // good
+    var foo = a || b;
+    var bar = !!c;
+    var baz = !c;
+    ```
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -703,7 +863,7 @@
     }
     ```
 
-  - Use `//` for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment.
+  - Use `//` for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it's on the first line of a block.
 
     ```javascript
     // bad
@@ -726,6 +886,14 @@
     function getType() {
       console.log('fetching type...');
 
+      // set the default type to 'no type'
+      var type = this._type || 'no type';
+
+      return type;
+    }
+
+    // also good
+    function getType() {
       // set the default type to 'no type'
       var type = this._type || 'no type';
 
@@ -944,6 +1112,106 @@
     return obj;
     ```
 
+  - Do not pad your blocks with blank lines.
+
+    ```javascript
+    // bad
+    function bar() {
+
+      console.log(foo);
+
+    }
+
+    // also bad
+    if (baz) {
+
+      console.log(qux);
+    } else {
+      console.log(foo);
+
+    }
+
+    // good
+    function bar() {
+      console.log(foo);
+    }
+
+    // good
+    if (baz) {
+      console.log(qux);
+    } else {
+      console.log(foo);
+    }
+    ```
+
+  - Do not add spaces inside parentheses.
+
+    ```javascript
+    // bad
+    function bar( foo ) {
+      return foo;
+    }
+
+    // good
+    function bar(foo) {
+      return foo;
+    }
+
+    // bad
+    if ( foo ) {
+      console.log(foo);
+    }
+
+    // good
+    if (foo) {
+      console.log(foo);
+    }
+    ```
+
+  - Do not add spaces inside brackets.
+
+    ```javascript
+    // bad
+    var foo = [ 1, 2, 3 ];
+    console.log(foo[ 0 ]);
+
+    // good
+    var foo = [1, 2, 3];
+    console.log(foo[0]);
+    ```
+
+  - Add spaces inside curly braces.
+
+    ```javascript
+    // bad
+    var foo = {clark: 'kent'};
+
+    // good
+    var foo = { clark: 'kent' };
+    ```
+
+  - Avoid having lines of code that are longer than 100 characters (including whitespace).
+
+    ```javascript
+    // bad
+    var foo = 'Whatever national crop flips the window. The cartoon reverts within the screw. Whatever wizard constrains a helpful ally. The counterpart ascends!';
+
+    // bad
+    $.ajax({ method: 'POST', url: 'https://airbnb.com/', data: { name: 'John' } }).done(function () { console.log('Congratulations!'); }).fail(function () { console.log('You have failed this city.'); });
+
+    // good
+    var foo = 'Whatever national crop flips the window. The cartoon reverts within the screw. ' +
+      'Whatever wizard constrains a helpful ally. The counterpart ascends!';
+
+    // good
+    $.ajax({
+      method: 'POST',
+      url: 'https://airbnb.com/',
+      data: { name: 'John' },
+    })
+      .done(function () { console.log('Congratulations!'); })
+      .fail(function () { console.log('You have failed this city.'); });
+    ```
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1178,18 +1446,23 @@
     });
     ```
 
-  - Use a leading underscore `_` when naming private properties.
+  - Do not use trailing or leading underscores.
+
+
+    > Why? JavaScript does not have the concept of privacy in terms of properties or methods. Although a leading underscore is a common convention to mean “private”, in fact, these properties are fully public, and as such, are part of your public API contract. This convention might lead developers to wrongly think that a change won't count as breaking, or that tests aren't needed. tl;dr: if you want something to be “private”, it must not be observably present.
 
     ```javascript
     // bad
     this.__firstName__ = 'Panda';
     this.firstName_ = 'Panda';
+    this._firstName = 'Panda';
 
     // good
-    this._firstName = 'Panda';
+    this.firstName = 'Panda';
     ```
 
   - When saving a reference to `this` use `_this`.
+    > TODO: review this with full group
 
     ```javascript
     // bad
