@@ -2282,8 +2282,23 @@ Other Style Guides
     this.firstName = 'Panda';
     ```
 
-  <a name="naming--self-this"></a><a name="22.5"></a>
-  - [22.5](#naming--self-this) Don't save references to `this`. Use arrow functions or Function#bind. jscs: [`disallowNodeTypes`](http://jscs.info/rule/disallowNodeTypes)
+  <a name="naming--name-functions"></a><a name="22.5"></a>
+  - [22.5](#naming--name-functions") Name your functions. This is helpful for stack traces. (Note: does not apply to "inline" functions declarations, such as event handlers.)
+
+    ```javascript
+    // bad
+    const log = function (msg) {
+      console.log(msg);
+    };
+
+    // good
+    const log = function log(msg) {
+      console.log(msg);
+    };
+    ```
+
+  <a name="naming--self-this"></a><a name="22.6"></a>
+  - [22.6](#naming--self-this) Don't save references to `this`. Use arrow functions or Function#bind. jscs: [`disallowNodeTypes`](http://jscs.info/rule/disallowNodeTypes)
 
     ```javascript
     // bad
@@ -2310,8 +2325,8 @@ Other Style Guides
     }
     ```
 
-  <a name="naming--filename-matches-export"></a><a name="22.6"></a>
-  - [22.6](#naming--filename-matches-export) A base filename should exactly match the name of its default export.
+  <a name="naming--filename-matches-export"></a><a name="22.7"></a>
+  - [22.7](#naming--filename-matches-export) A base filename should exactly match the name of its default export.
 
     ```javascript
     // file 1 contents
@@ -2346,8 +2361,8 @@ Other Style Guides
     // ^ supports both insideDirectory.js and insideDirectory/index.js
     ```
 
-  <a name="naming--camelCase-default-export"></a><a name="22.7"></a>
-  - [22.7](#naming--camelCase-default-export) Use camelCase when you export-default a function. Your filename should be identical to your function's name.
+  <a name="naming--camelCase-default-export"></a><a name="22.8"></a>
+  - [22.8](#naming--camelCase-default-export) Use camelCase when you export-default a function. Your filename should be identical to your function's name.
 
     ```javascript
     function makeStyleGuide() {
@@ -2356,8 +2371,8 @@ Other Style Guides
     export default makeStyleGuide;
     ```
 
-  <a name="naming--PascalCase-singleton"></a><a name="22.8"></a>
-  - [22.8](#naming--PascalCase-singleton) Use PascalCase when you export a constructor / class / singleton / function library / bare object.
+  <a name="naming--PascalCase-singleton"></a><a name="22.9"></a>
+  - [22.9](#naming--PascalCase-singleton) Use PascalCase when you export a constructor / class / singleton / function library / bare object.
 
     ```javascript
     const AirbnbStyleGuide = {

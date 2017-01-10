@@ -1251,31 +1251,46 @@
     };
     ```
 
-  - Additional trailing comma: **Nope.** This can cause problems with IE6/7 and IE9 if it's in quirksmode. Also, in some implementations of ES3 would add length to an array if it had an additional trailing comma. This was clarified in ES5 ([source](http://es5.github.io/#D)):
+  - Additional trailing comma: **Yup.** (But note this can cause problems with IE6/7 and IE9 if it's in quirksmode.) 
 
-  > Edition 5 clarifies the fact that a trailing comma at the end of an ArrayInitialiser does not add to the length of the array. This is not a semantic change from Edition 3 but some implementations may have previously misinterpreted this.
+    > Why? This leads to cleaner git diffs.
 
     ```javascript
-    // bad
+    // bad - git diff without trailing comma
     var hero = {
-      firstName: 'Kevin',
-      lastName: 'Flynn',
+         firstName: 'Florence',
+    -    lastName: 'Nightingale'
+    +    lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb graph', 'modern nursing']
     };
 
-    var heroes = [
-      'Batman',
-      'Superman',
-    ];
-
-    // good
+    // good - git diff with trailing comma
     var hero = {
-      firstName: 'Kevin',
-      lastName: 'Flynn'
+         firstName: 'Florence',
+         lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb chart', 'modern nursing'],
+    };
+
+    // bad
+    var hero = {
+      firstName: 'Dana',
+      lastName: 'Scully'
     };
 
     var heroes = [
       'Batman',
       'Superman'
+    ];
+
+    // good
+    var hero = {
+      firstName: 'Dana',
+      lastName: 'Scully',
+    };
+
+    var heroes = [
+      'Batman',
+      'Superman',
     ];
     ```
 
@@ -1461,15 +1476,14 @@
     this.firstName = 'Panda';
     ```
 
-  - When saving a reference to `this` use `_this`.
-    > TODO: review this with full group
+  - When saving a reference to `this` use `self`.
 
     ```javascript
     // bad
     function () {
-      var self = this;
+      var _this = this;
       return function () {
-        console.log(self);
+        console.log(_this);
       };
     }
 
@@ -1483,14 +1497,14 @@
 
     // good
     function () {
-      var _this = this;
+      var self = this;
       return function () {
-        console.log(_this);
+        console.log(self);
       };
     }
     ```
 
-  - Name your functions. This is helpful for stack traces.
+  - Name your functions. This is helpful for stack traces. (Note: does not apply to "inline" functions declarations, such as event handlers.)
 
     ```javascript
     // bad
@@ -1700,10 +1714,11 @@
 
 ## Modules
 
-  - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. [Explanation](https://github.com/airbnb/javascript/issues/44#issuecomment-13063933)
-  - The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
-  - Add a method called `noConflict()` that sets the exported module to the previous version and returns this one.
   - Always declare `'use strict';` at the top of the module.
+  - Recommendations but not rules:
+    - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. [Explanation](https://github.com/airbnb/javascript/issues/44#issuecomment-13063933)
+    - The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
+    - Add a method called `noConflict()` that sets the exported module to the previous version and returns this one.
 
     ```javascript
     // fancyInput/fancyInput.js
